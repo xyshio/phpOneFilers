@@ -10,13 +10,11 @@
         $_SESSION[$sz] = '800';
     }
 
-//echo $_SESSION[$sz];
-
-echo '<!DOCTYPE html><html><head><title>JAVA-OCA-FLASHKI-PICTURES</title>';
+echo '<!DOCTYPE html><html><head><title>Simple-Dir-Gallery [SDG]</title>';
 echo '<style>
 
 BODY{padding:10px;background-color:ghostwhite;color:silver;font-family:verdana;}
-#menux{display:block;top:0px;padding:40xp;background-color:silver;width:100%;}
+#menux{display:block;top:0px;padding:40xp;background-color:silver;width:100%;text-align:center;}
 #menux a{margin-left:10px; margin-right:10px; }
 #left{border:1px black solid:width:100px;height:100px;position:absolute;left:0px, top:0px;}
 #right{border:1px black solid:width:100px;height:100px;position:absolute;right:0px, top:0px;}
@@ -24,7 +22,7 @@ BODY{padding:10px;background-color:ghostwhite;color:silver;font-family:verdana;}
 echo '</head><body>';
 echo '<div id="menux">';
 $current = (!isset($_REQUEST['cur'])?0:$_REQUEST['cur']);
-
+// menu
 echo '<a href="index.php?'.$sz.'=500&cur='.$current.'">500</a>';
 echo '<a href="index.php?'.$sz.'=800&cur='.$current.'">800</a>';
 echo '<a href="index.php?'.$sz.'=1000&cur='.$current.'">1000</a>';
@@ -32,26 +30,18 @@ echo '<a href="index.php?'.$sz.'=1200&cur='.$current.'">1200</a>';
 echo '<a href="index.php?'.$sz.'=1400&cur='.$current.'">1400</a>';
 echo '</div>';
 
-
-//die();
-
 $file_ext = array("jpg","bmp","png");
 $r = scanDir::scan(".", $file_ext);
 ////////////////////////////////////////////////////
-////// Wyswietlanie wszystkich jako kafelki
-// foreach ($r as &$v) {
-// echo '<div style="display:inline-table;background-color:red;color:white;margin:3px;padding:4px;"><b>'.strtoupper(str_replace("./","",$v)). '</b><BR><a href="'.$v.'" target="_blind"><img src="'.$v.'" style="height:350px;margin-bottom:20px;border:0px red solid;" /></a></div>&nbsp;&nbsp;&nbsp;';
-// }
-////////////////////////////////////////////////////
+// engine dialog
 if(isset($_REQUEST['cur'])){
 echo DRAW_ME_AND_LEFT_AND_RIGHT($r, $_REQUEST['cur'], $_SESSION[$sz]);
 }else{
 echo DRAW_ME_AND_LEFT_AND_RIGHT($r, 0, $_SESSION[$sz]);
 }
 echo '</body></html>';
-
-
-
+////////////////////////////////////////////////////////////////
+// functions 
 ////////////////////////////////////////////////////////////////
 function DRAW_ME_AND_LEFT_AND_RIGHT($array, $MeIndex, $szer){
   $max = count($array);
@@ -80,8 +70,7 @@ if($key>0){
 $f.='</table>'; 
   return $f;
 }
-
-
+///////////////////////////////////////////////////////////////
 function DRAW_WHOLE_ARRAY_AS_LINKS($array, $szer){
 $f='';
 foreach($array as $k=>$v){
@@ -89,11 +78,10 @@ $f.='&nbsp;<a href="index.php?cur='.$k.'&szer='.$szer.'">[&nbsp;'.($k+1).'&nbsp;
 }
 return $f;
 }
-
-
+////////////////////////////////////////////////////////////
+// scanning dir
 class scanDir {
     static private $directories, $files, $ext_filter, $recursive;
-
 // ----------------------------------------------------------------------------------------------
     // scan(dirpath::string|array, extensions::string|array, recursive::true|false)
     static public function scan(){
