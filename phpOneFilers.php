@@ -1,4 +1,10 @@
 <?php
+/*
+* presenting thumbnails flow from pictures located in directory
+* @author: k.gumulak
+*/
+
+
     if (!isset($_SESSION)) {
       session_start();
     }
